@@ -4,7 +4,11 @@ export const videoPlayerInit = () => {
 				videoButtonStop = document.querySelector('.video-button__stop'),
 				videoProgress = document.querySelector('.video-progress'),
 				videoTimePassed = document.querySelector('.video-time__passed'),
-				videoTimeTotal = document.querySelector('.video-time__total');
+				videoTimeTotal = document.querySelector('.video-time__total'),
+				videoVolume = document.querySelector('.video-volume'),
+				videoFullscreen = document.querySelector('.video-fullscreen'),
+				volumeDown = document.querySelector('.volume-down'),
+				volumeUp = document.querySelector('.volume-up');
 	
 	const toggleIcon = () => {
 		if (videoPlayer.paused) {
@@ -31,6 +35,16 @@ export const videoPlayerInit = () => {
 	
 	const addZero = n => n < 10 ? '0' + n : n;
 
+	const toggleIconVolume = () => {
+		if (videoPlayer.volume === 0) {
+			volumeDown.classList.remove('fa-volume-down');
+			volumeDown.classList.add('fa-volume-off');
+		} else {
+			volumeDown.classList.remove('fa-volume-off');
+			volumeDown.classList.add('fa-volume-down');
+		}
+	};
+
 	
 	videoPlayer.addEventListener('click', togglePlay);
 	videoButtonPlay.addEventListener('click', togglePlay);
@@ -56,11 +70,33 @@ export const videoPlayerInit = () => {
 		videoTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(secondsTotal)}`;
 	});
 
-	videoProgress.addEventListener('change', () => {
+	videoProgress.addEventListener('input', () => {
 		const duration = videoPlayer.duration;
 		const value = videoProgress.value;
 
 		videoPlayer.currentTime = (value * duration) / 100;
 	});
 
+	videoFullscreen.addEventListener('click', () => {
+		videoPlayer.requestFullscreen();
+	});
+
+	videoVolume.addEventListener('input', () => {
+		videoPlayer.volume = videoVolume.value / 100;
+		toggleIconVolume();
+	});
+	videoPlayer.volume = 0.5;
+	videoVolume.value = videoPlayer.volume * 100;
+
+	volumeDown.addEventListener('click', () => {
+		videoVolume.value = 0;
+		videoPlayer.volume = 0;
+		toggleIconVolume();
+	});
+	volumeUp.addEventListener('click', () => {
+		videoVolume.value = 100;
+		videoPlayer.volume = 1;
+		toggleIconVolume();
+	});
+	
 };

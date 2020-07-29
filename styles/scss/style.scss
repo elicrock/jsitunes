@@ -126,6 +126,17 @@ main {
 }
 
 
+@-webkit-keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -187,4 +198,16 @@ main {
 
 .red-text {
   color: #F51E38;
+}
+
+.video-icon, .audio-icon {
+  margin: 5px;
+}
+
+.video-volume, .audio-volume {
+  max-width: 100px;
+}
+
+.video-fullscreen, .audio-icon {
+  cursor: pointer;
 }
